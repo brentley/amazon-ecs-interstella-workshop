@@ -6,23 +6,21 @@ WORKDIR ${PRODUCT}
 
 COPY ./requirements.txt .
 
-RUN apk -U --no-cache upgrade && \
-    apk --no-cache add \
+RUN apk -U upgrade && \
+    apk add \
     git \
     wget \
-    libffi \
     python2 \
     py-pip \
     py-idna \
     py-openssl \
     py-cryptography \
     libffi-dev \
-    openssl \
     openssl-dev \
     py-virtualenv \
     gcc && \
     pip install --no-cache-dir -r requirements.txt && \
-    apk --no-cache del \
+    apk del \
     wget \
     git \
     libffi-dev \
@@ -30,7 +28,8 @@ RUN apk -U --no-cache upgrade && \
     py-virtualenv \
     py-pip \
     gcc && \
-    find /usr/ -name *.pyc -delete
+    rm -rvf /var/cache/apk/* && \
+    find /usr/ -name *.pyc -exec rm -vf {} \;
 
 COPY ./$PRODUCT.py .
 
