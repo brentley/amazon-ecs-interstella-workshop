@@ -1,19 +1,24 @@
+icdiff Dockerfile Dockerfile-slim
 docker build -f Dockerfile-slim -t client-slim .
 docker run -e orderTopic=arn:aws:sns:us-east-1:651426287273:ecsworkshop-commit -e monolithUrl=http://foo.example.com -ti client-slim
 docker images |grep client
 
+icdiff Dockerfile Dockerfile-alpine
 docker build -f Dockerfile-alpine -t client-alpine .
 docker run -e orderTopic=arn:aws:sns:us-east-1:651426287273:ecsworkshop-commit -e monolithUrl=http://foo.example.com -ti client-alpine
 docker images |grep client
 
+icdiff Dockerfile-alpine Dockerfile-alpine-2
 docker build -f Dockerfile-alpine-2 -t client-alpine-2 .
 docker run -e orderTopic=arn:aws:sns:us-east-1:651426287273:ecsworkshop-commit -e monolithUrl=http://foo.example.com -ti client-alpine-2
 docker images |grep client
 
+icdiff Dockerfile-alpine-2 Dockerfile-alpine-3
 docker build -f Dockerfile-alpine-3 -t client-alpine-3 .
 docker run -e orderTopic=arn:aws:sns:us-east-1:651426287273:ecsworkshop-commit -e monolithUrl=http://foo.example.com -ti client-alpine-3
 docker images |grep client
 
+icdiff Dockerfile-alpine-3 Dockerfile-alpine-4
 docker build -f Dockerfile-alpine-4 -t client-alpine-4 .
 docker run -e orderTopic=arn:aws:sns:us-east-1:651426287273:ecsworkshop-commit -e monolithUrl=http://foo.example.com -ti client-alpine-4
 docker images |grep client
