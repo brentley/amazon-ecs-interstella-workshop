@@ -1,0 +1,41 @@
+FROM alpine:3.7
+
+ENV PRODUCT iridium
+
+WORKDIR ${PRODUCT}
+
+COPY ./requirements.txt .
+
+RUN apk -U --no-cache upgrade && \
+    apk --no-cache add \
+    git \
+    wget \
+    libffi \
+    python2 \
+    py-pip \
+    py-idna \
+    py-openssl \
+    py-cryptography \
+    libffi-dev \
+    openssl \
+    openssl-dev \
+    py-virtualenv \
+    gcc && \
+    pip install --no-cache-dir -r requirements.txt && \
+    apk --no-cache del \
+    wget \
+    git \
+    libffi-dev \
+    openssl-dev \
+    py-virtualenv \
+    py-pip \
+    gcc && \
+    find /usr/ -name *.pyc -delete
+
+COPY ./$PRODUCT.py .
+
+EXPOSE 5000
+
+ENTRYPOINT ["python", "-v", "iridium.py"]
+
+# docker run -e orderTopic=arn:aws:sns:us-east-1:651426287273:ecsworkshop-commit -e monolithUrl=http://foo.example.com -ti client-alpine

@@ -34,4 +34,4 @@ COPY ./$PRODUCT.py .
 
 EXPOSE 5000
 
-ENTRYPOINT ["bin/python", "iridium.py"]
+ENTRYPOINT ["bin/python", "-v", "iridium.py"]

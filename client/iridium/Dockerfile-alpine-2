@@ -1,0 +1,32 @@
+FROM python:2-alpine
+
+ENV PRODUCT iridium
+
+RUN apk -U upgrade
+
+RUN apk add \
+  git \
+  wget \
+  libffi \
+  py-idna \
+  py-openssl \
+  py-cryptography \
+  libffi-dev \
+  openssl \
+  openssl-dev \
+  py-virtualenv \
+  gcc
+
+WORKDIR ${PRODUCT}
+
+COPY ./requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./$PRODUCT.py .
+
+EXPOSE 5000
+
+ENTRYPOINT ["python", "-v", "iridium.py"]
+
+# docker run -e orderTopic=arn:aws:sns:us-east-1:651426287273:ecsworkshop-commit -e monolithUrl=http://foo.example.com -ti client-alpine
